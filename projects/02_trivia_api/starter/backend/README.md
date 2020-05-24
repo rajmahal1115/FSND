@@ -72,9 +72,12 @@ This README is missing documentation of your endpoints. Below is an example for 
 
 Endpoints
 GET '/categories'
-GET ...
-POST ...
-DELETE ...
+GET '/questions'
+DELETE '/questions/<int:id>'
+POST '/questions'
+POST '/questions/search'
+GET '/categories/<int:id>/questions'
+POST '/quizzes'
 
 GET '/categories'
 - Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
@@ -88,7 +91,52 @@ GET '/categories'
 '6' : "Sports"}
 
 ```
+GET '/questions'
+-Fetches 10 questions per page 
+-Request arguments: page 
+-Returns: An object with 10 questions, total number of questions,all the categories and a blank for current category
+ {'questions': question_items ,
+      'total_questions': total_questions ,
+      'categories': categories ,
+      'current_category': '' }
+```
+POST '/questions/<int:id>'
+- Deletes a single question 
+-Request arugment: id (question id that needs to get deleted)
+-Returns: Returns a success message if question was deleted. If you are trying to delete a question that doesnt exist it raises a notfound fag or internalserver error depending on the issue
 
+```
+POST '/questions/'
+-Creates a new question that gets added to the list of questions
+-Request arguments: Question,answer,difficulty,category
+-Returns: Returns a success message if questions was created properly or raises a badrequest flag or internalserver error depending on the issue
+
+```
+POST '/questions/search'
+-Searches questions based on search criteria 
+-Request arguments: searchTerm
+-Returns: Returns 10 questions per page that matches search criteria, total number of questiond and current category is blank
+{'questions': questions_formatted,
+'total_questions': questions_page.total,
+'current_category': ''
+}
+
+```
+GET '/categories/<int:id>/questions'
+-Getting questions by categories 
+-Request arguments: id
+-Returns: Returns 10 questions per page that matches the categories, total questions,current category is blank. If the category is invalid notfound flag is raised 
+{"questions": question_by_category_formatted,
+"total_questions": total_questions,
+"current_category": category_formatted
+}
+
+```
+POST '/quizzes'
+-Gets single random question for a quiz by category that hasnt been already asked
+-Request arguments:previous questions that were asked in the quiz and category for questions
+-Returns: retuns a random question
+```
 
 ## Testing
 To run the tests, run
