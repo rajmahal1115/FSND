@@ -75,3 +75,6 @@ class Category(db.Model):
       'id': self.id,
       'type': self.type
     }
+  def insert(self):
+    db.session.add(self)
+    db.session.commit()
